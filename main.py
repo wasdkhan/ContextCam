@@ -44,14 +44,14 @@ while True:
                                                          threshold = 0.1)
             watson_classes = watson_out["images"][0]["classifiers"][0]["classes"]
             #sorted(watson_classes, key=lambda pred: -pred["score"])
-            for i in range(len(watson_classes)):
-                print watson_classes[i]["class"], watson_classes[i]["score"]
             top_word = {"score": 0, "class":""}
             top_color = {"score": 0, "class":""}
             second_word = top_word
             second_color = top_color
             third_word = top_word
+            print "Watson: "
             for wclass in watson_classes:
+                print wclass["class"], wclass["score"]
                 if "color" in wclass["class"]:
                     if wclass["score"] > top_color["score"]:
                         second_color = top_color
@@ -72,17 +72,17 @@ while True:
                     text += "n " + top_color["class"][:-6]
                 else:
                     text += " " + top_color["class"][:-6] 
-            print top_word, top_color, second_word, second_color
+            #print top_word, top_color, second_word, second_color
             text += " " + top_word["class"] + "."
             if top_word["class"].count(" ") == 0:
                 tags = [(top_word["class"], "NN")]
             else:
                 tokens = nltk.word_tokenize(top_word["class"])
                 tags = nltk.pos_tag(tokens)
-            print "tags:", tags
+            print "\nGrammar:", tags
             for item in tags:
                 val = dict.meaning(item[0])
-                print "val:", val
+                #print "val:", val
                 if val is not None:
                     text += " A"
                     if item[0][0].lower() in "aeiou":
@@ -98,14 +98,14 @@ while True:
                 if second_color["score"] != 0:
                     if second_color["class"][0].lower() in "aeiou":
                         text += "n"
-                text += " " + second_color["class"][:-6] + " " + second_word["class"]
+                text += " " + second_color["class"][:-5] + " " + second_word["class"]
                 if third_word["score"] != 0:
                     text += " or a"
                     if third_word["class"][0].lower() in "aeiou":
                         text += "n"
                     text += " " + third_word["class"]
                 text += "."
-            print text
+            print "\nGenerated Text:", text
             subprocess.call(["pico2wave", "-w", "description.wav",text])
             subprocess.call(["aplay", "description.wav"])
             #time.sleep(0.1)
