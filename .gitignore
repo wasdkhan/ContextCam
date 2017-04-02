@@ -1,0 +1,5 @@
+*.jpg
+*.wav
+settings.py
+buttons.py
+watson-test.py
