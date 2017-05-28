@@ -1,4 +1,7 @@
 # ContextCam
+
+Featured on Indico's Inspiring Hacks: [Blog Post](https://indico.io/blog/inspiring-hacks-contextcam/)
+
 ContextCam is a project from [HackPrinceton](https://www.hackprinceton.com) Spring 2017. ContextCam runs on the Raspberry PI with a RPi Cameram, a single push button, and a mobile power source. It takes a picture, runs it through Watson and Indico to get context about the image. Then, through use of nltk and PyDictionary, it generates a description about the image and outputs as audio.
 
 The positioning of the object is important, preferably in the center with a monochromatic background for better results. It currently takes top three predictions and forms a description with them. For emotional analysis, it gets the top three emotions and describes the person. 
